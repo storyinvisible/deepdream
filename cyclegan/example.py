@@ -8,7 +8,7 @@ A = np.load('dataset_trainA.npy') / 255.
 B = np.load('dataset_trainB.npy') / 255.
 
 iters = 200 * min(A.shape[0], B.shape[0])
-batch_size = 1
+batch_size = 16
 
 with tf.device('/gpu:0'):
     model = CycleGAN(256, 256, xchan=3, ychan=3)
@@ -82,7 +82,7 @@ with tf.Session(config=tf.ConfigProto(allow_soft_placement=True, log_device_plac
             plt.savefig('images/iter_%d.jpg' % step)
             plt.close()
 
-        if step % 1000 == 0:
+        if step % 2 == 0:
             # Save the model
             save_path = saver.save(sess, "models/model.ckpt")
             print("Model saved in file: %s" % save_path)
